@@ -8,6 +8,8 @@ It combines a React frontend, an Express API, a PostgreSQL database via Prisma, 
 
 <img src="docs/demo/ainsight-preview.gif" alt="AInsight Demo" width="100%" />
 
+Live Demo: http://ainsight-demo-jack.s3-website.ap-southeast-4.amazonaws.com
+
 ## What It Does
 
 - Aggregates AI updates from official blogs, newsroom pages, release notes, and selected X accounts.
