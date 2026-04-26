@@ -1,0 +1,20 @@
+Front-end
+cd E:\Project\AInsight\apps\web
+npm run dev
+
+Back-end
+cd E:\Project\AInsight\apps\api
+npm run dev
+
+Database
+数据抓取
+cd E:\Project\AInsight\apps\api
+npm run crawl:news
+
+数据库迁移
+cd E:\Project\AInsight\apps\api
+npm run db:migrate
+
+数据库面板
+cd E:\Project\AInsight
+npm run db:studio --workspace @ainsight/api

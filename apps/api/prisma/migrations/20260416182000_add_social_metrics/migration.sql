@@ -1,0 +1,3 @@
+ALTER TABLE "NewsItem"
+ADD COLUMN "likeCount" INTEGER,
+ADD COLUMN "retweetCount" INTEGER;

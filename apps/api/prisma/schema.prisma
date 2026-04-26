@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SourceCategory {
+  official
+  research
+  media
+  community
+}
+
+enum FeedType {
+  rss
+  atom
+  html
+}
+
+model Source {
+  id          String          @id @default(cuid())
+  sourceKey   String          @unique
+  name        String
+  homepageUrl String
+  category    SourceCategory
+  sourceType  FeedType
+  items       NewsItem[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model NewsItem {
+  id           String    @id @default(cuid())
+  externalId   String    @unique
+  title        String
+  summary      String
+  keywords     String[]
+  company      String?
+  modelFamily  String?
+  contentType  String?
+  author       String?
+  authorAvatarUrl String?
+  likeCount    Int?
+  retweetCount Int?
+  link         String?
+  publishedAt  DateTime?
+  crawledAt    DateTime  @default(now())
+  sourceId     String
+  source       Source    @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  bookmarks    Bookmark[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([publishedAt])
+  @@index([sourceId])
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  sessions     AuthSession[]
+  bookmarks    Bookmark[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model AuthSession {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  newsItemId String
+  newsItem   NewsItem @relation(fields: [newsItemId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, newsItemId])
+  @@index([userId])
+  @@index([newsItemId])
+}

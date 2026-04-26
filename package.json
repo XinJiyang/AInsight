@@ -1,0 +1,16 @@
+{
+  "name": "ainsight",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @ainsight/web",
+    "dev:api": "npm run dev --workspace @ainsight/api",
+    "build:web": "npm run build --workspace @ainsight/web",
+    "build:web:demo": "npm run build:demo --workspace @ainsight/web",
+    "build:api": "npm run build --workspace @ainsight/api"
+  }
+}
